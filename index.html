@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Najil Umair - Portfolio</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+
+  <style>
+    html { scroll-behavior: smooth; }
+
+    #matrixCanvas {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      z-index: -1; display: block;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background: #080711; color: antiquewhite; }
+
+    .header {
+      position: fixed; top: 0; left: 0; width: 100%;
+      padding: 20px 10%;
+      background: rgba(8, 7, 17, 0.7);
+      backdrop-filter: blur(6px);
+      display: flex; justify-content: space-between; align-items: center;
+      z-index: 1000;
+    }
+
+    .logo { font-size: 25px; font-weight: 600; color: aliceblue; text-decoration: none; }
+    .navbar a {
+      font-size: 18px; color: antiquewhite; text-decoration: none; font-weight: 500;
+      margin-left: 20px; transition: 0.3s;
+    }
+    .navbar a:hover, .navbar a.active { color: rgb(108, 184, 9); }
+
+    section {
+      min-height: 100vh;
+      padding: 100px 10px 50px;
+      display: flex; justify-content: center; align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .home {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+      gap: 40px;
+    }
+
+    .home-content { flex: 1; margin-left: 60px; }
+    .home-content h1 { font-size: 50px; font-weight: 700; margin-bottom: 15px; }
+    .home-content h3 { font-size: 32px; color: rgb(108, 184, 9); margin-bottom: 10px; }
+    .home-content p { margin: 15px 0; font-size: 16px; line-height: 1.6; max-width: 600px; }
+
+    .intro-photo {
+      flex: 1;
+      max-width: 350px;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .btn-box { margin-top: 20px; display: flex; gap: 20px; }
+    .btn-box a {
+      display: inline-block; padding: 12px 24px;
+      background: rgb(108, 184, 9); color: #132238;
+      border: 2px solid rgb(108, 184, 9); border-radius: 8px;
+      text-decoration: none; font-weight: 600;
+      transition: 0.3s;
+    }
+    .btn-box a:hover { background: transparent; color: rgb(108, 184, 9); }
+
+    .home-sci { margin-top: 40px; display: flex; gap: 15px; }
+    .home-sci a {
+      display: flex; justify-content: center; align-items: center;
+      width: 45px; height: 45px;
+      border: 2px solid rgb(108, 184, 9);
+      border-radius: 50%;
+      color: rgb(108, 184, 9);
+      font-size: 22px; text-decoration: none;
+      transition: 0.3s;
+    }
+    .home-sci a:hover { background: rgb(108, 184, 9); color: #fff; transform: translateY(-5px); }
+
+    .about, .projects, .education, .contact {
+      text-align: center;
+    }
+    .about h2, .projects h2, .education h2, .contact h2 {
+      font-size: 36px; color: rgb(108, 184, 9); margin-bottom: 15px;
+    }
+    .about p, .projects p, .education p, .contact p {
+      max-width: 700px; margin: 5px; line-height: 1.6;
+    }
+
+    footer {
+      text-align: center; padding: 20px; background: rgba(8,7,17,0.7);
+      color: antiquewhite; font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .home { flex-direction: column; text-align: center; }
+      .home-content, .intro-photo { flex: unset; max-width: 100%; }
+    }
+
+    /* === Education Flip Cards === */
+    .container {
+      display: flex;
+      gap: 50px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .card {
+      width: 250px;
+      height: 350px;
+      perspective: 1000px;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .card:hover .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      border: 1px solid rgb(108, 184, 9);
+      background: transparent;
+      color: antiquewhite;
+      font-weight: bold;
+    }
+
+    .card-front {
+      transform: rotateY(0deg);
+      font-size: 20px;
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    .card-back h3 {
+      margin: 0 0 10px 0;
+      font-size: 16px;
+      text-align: center;
+      color: rgb(108, 184, 9);
+    }
+
+    .card-back ul {
+      padding-left: 20px;
+      margin: 0;
+    }
+
+    .card-back li {
+      margin-bottom: 5px;
+      font-weight: normal;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrixCanvas"></canvas>
+
+  <header class="header">
+    <a href="#" class="logo">PORTFOLIO</a>
+    <nav class="navbar">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="home" id="home">
+    <div class="home-content">
+      <h1>Hey there, I am Najil Umair</h1>
+      <h3>DevOps Engineer</h3>
+      <p>Great power comes from great responsibility.</p>
+      <div class="btn-box">
+        <a href="#">Download CV</a>
+        <a href="#">Let's Talk</a>
+      </div>
+      <div class="home-sci">
+        <a href="#"><i class='bx bxl-github'></i></a>
+        <a href="#"><i class='bx bxl-linkedin'></i></a>
+      </div>
+    </div>
+    <img src="your-photo.jpg" alt="Najil Umair" class="intro-photo" />
+  </section>
+
+  <section class="about" id="about">
+    <h2>About Me</h2>
+    <p>
+      I am passionate about building scalable and automated cloud infrastructure. 
+      With hands-on experience in AWS, CI/CD pipelines, and containerized applications, 
+      I aim to deliver reliable and efficient solutions for businesses.
+    </p>
+  </section>
+
+  <section class="projects" id="projects">
+    <h2>Projects</h2>
+    <p>
+      • Cloud Infrastructure Design (AWS)<br>
+      • CI/CD Pipeline Setup<br>
+      • Docker & Kubernetes Deployment<br>
+      • Monitoring & Logging Solutions
+    </p>
+  </section>
+
+  <!-- === Updated Education Section with Flip Cards === -->
+  <section class="education" id="education">
+    <h2>Education</h2>
+    <div class="container">
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            Higher Secondary
+          </div>
+          <div class="card-back">
+            <h3>GHSS Meppadi, Wayanad</h3>
+            <ul>
+              <li>Stream: Science</li>
+              <li>Duration: 2017 - 2019</li>
+              <li>Percentage: 80%</li>
+              <li>Major Subjects: Physics, Chemistry, Math</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            Graduation
+          </div>
+          <div class="card-back">
+            <h3>WMO Arts and Science collage, Wayanad</h3>
+            <ul>
+              <li>Degree: B.Sc. Electronics</li>
+              <li>Duration: 2019 - 2022</li>
+              <li>CGPA: 8.5/10</li>
+              <li>Activities: Electronis and components, 
+                  PCB desining, C++ , Arduino programing.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-front">
+            DevOps Engineering
+          </div>
+          <div class="card-back">
+            <h3>Synnefo Solutions
+              Ernakulam
+            </h3>
+            <ul>
+              <li>Course: DevOps Training</li>
+              <li>Duration: march 2024 - Dec 2024</li>
+              <li>Skills: Docker, Kubernetes, Jenkins, AWS, RHEL, Ansible, CI/CD</li>
+              <li>Certification: Completed</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2>Contact Me</h2>
+    <p>Email: najil@example.com | LinkedIn: <a href="#">linkedin.com/in/najil</a></p>
+  </section>
+
+  <footer>
+    © 2025 Najil Umair | DevOps Portfolio
+  </footer>
+
+  <script>
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const characters = [
+      'ア','イ','ウ','エ','オ','カ','キ','ク','ケ','コ',
+      'サ','シ','ス','セ','ソ','タ','チ','ツ','テ','ト',
+      '你','好','学','习','天','气','中','国','爱','生',
+      ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+      ...'abcdefghijklmnopqrstuvwxyz',
+      ...'0123456789'
+    ];
+
+    const fontSize = 15;
+    const columnSpacing = 45;
+    let columns = 0, drops = [], alphas = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      columns = Math.floor(canvas.width / columnSpacing);
+      drops = Array(columns).fill(0).map(() => Math.floor(Math.random() * 100));
+      alphas = Array(columns).fill(0);
+    }
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    let lastTime = 0;
+    const frameInterval = 100;
+    const alphaIncrement = 0.07;
+
+    function drawMatrix(ts) {
+      const delta = ts - lastTime;
+      if (delta > frameInterval) {
+        lastTime = ts;
+        ctx.fillStyle = "rgba(0,0,0,0.1)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.font = `${fontSize}px monospace`;
+
+        for (let i = 0; i < columns; i++) {
+          const char = characters[Math.floor(Math.random() * characters.length)];
+          const x = i * columnSpacing;
+          const y = drops[i] * fontSize;
+
+          if (alphas[i] < 1) {
+            alphas[i] += alphaIncrement;
+            if (alphas[i] > 1) alphas[i] = 1;
+          }
+
+          ctx.fillStyle = `rgba(108,184,9,${alphas[i]})`;
+          ctx.fillText(char, x, y);
+
+          if (y > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+            alphas[i] = 0;
+          }
+          drops[i]++;
+        }
+      }
+      requestAnimationFrame(drawMatrix);
+    }
+
+    requestAnimationFrame(drawMatrix);
+  </script>
+</body>
+</html>
