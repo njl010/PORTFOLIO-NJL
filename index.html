@@ -87,10 +87,10 @@
     }
     .home-sci a:hover { background: rgb(108, 184, 9); color: #fff; transform: translateY(-5px); }
 
-    .about, .projects, .education, .contact {
+    .about, .projects, .education, .contact, .skills {
       text-align: center;
     }
-    .about h2, .projects h2, .education h2, .contact h2 {
+    .about h2, .projects h2, .education h2, .contact h2, .skills h2 {
       font-size: 36px; color: rgb(108, 184, 9); margin-bottom: 15px;
     }
     .about p, .projects p, .education p, .contact p {
@@ -150,35 +150,56 @@
       background: transparent;
       color: antiquewhite;
       font-weight: bold;
+      box-shadow: 0 0 10px rgba(108, 184, 9);
     }
 
-    .card-front {
-      transform: rotateY(0deg);
-      font-size: 20px;
-    }
+    .card-front { font-size: 20px; }
+    .card-back { transform: rotateY(180deg); font-size: 14px; line-height: 1.5; text-align: left; }
+    .card-back h3 { margin: 0 0 10px 0; font-size: 16px; text-align: center; color: rgb(108, 184, 9); }
+    .card-back ul { padding-left: 20px; margin: 0; }
+    .card-back li { margin-bottom: 5px; font-weight: normal; }
 
-    .card-back {
-      transform: rotateY(180deg);
-      font-size: 14px;
-      line-height: 1.5;
-      text-align: left;
+    /* === Technical Skills Scrolling Boxes === */
+    .scrolling-menu {
+      display: flex;
+      overflow: hidden;
+      width: 100%;
+      padding: 20px 0;
+      position: relative;
     }
-
-    .card-back h3 {
-      margin: 0 0 10px 0;
-      font-size: 16px;
-      text-align: center;
+    .scrolling-menu .scrolling-content {
+      display: flex;
+      animation: scroll 25s linear infinite;
+    }
+    .scrolling-menu:hover .scrolling-content {
+      animation-play-state: paused;
+    }
+    .scrolling-menu .item {
+      flex: 0 0 auto;
+      width: 120px;
+      height: 120px;
+      margin: 0 15px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgb(108, 184, 9);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       color: rgb(108, 184, 9);
+      font-weight: bold;
+      font-size: 14px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(108, 184, 9);
     }
-
-    .card-back ul {
-      padding-left: 20px;
-      margin: 0;
+    .scrolling-menu .item img {
+      max-width: 50px;
+      max-height: 50px;
+      margin-bottom: 8px;
     }
-
-    .card-back li {
-      margin-bottom: 5px;
-      font-weight: normal;
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
   </style>
 </head>
@@ -191,6 +212,7 @@
       <a href="#home" class="active">Home</a>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
       <a href="#education">Education</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -232,66 +254,49 @@
     </p>
   </section>
 
-  <!-- === Updated Education Section with Flip Cards === -->
+  <!-- === Technical Skills Section === -->
+  <section class="skills" id="skills">
+    <h2>Technical Skills</h2>
+    <div class="scrolling-menu">
+      <div class="scrolling-content">
+
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg"><span>Docker</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/kubernetes/kubernetes-plain.svg"><span>Kubernetes</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original.svg"><span>AWS</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg"><span>Git</span></div>
+        <div class="item"><img src="https://www.jenkins.io/images/logos/jenkins/jenkins.svg"><span>Jenkins</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/ansible/ansible-original.svg"><span>Ansible</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/prometheus/prometheus-original.svg"><span>Prometheus</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/grafana/grafana-original.svg"><span>Grafana</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original.svg"><span>MySQL</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg"><span>GitHub</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redhat/redhat-original.svg"><span>RHEL</span></div>
+
+        <!-- Duplicate set for smooth infinite loop -->
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg"><span>Docker</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/kubernetes/kubernetes-plain.svg"><span>Kubernetes</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original.svg"><span>AWS</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg"><span>Git</span></div>
+        <div class="item"><img src="https://www.jenkins.io/images/logos/jenkins/jenkins.svg"><span>Jenkins</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/ansible/ansible-original.svg"><span>Ansible</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/prometheus/prometheus-original.svg"><span>Prometheus</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/grafana/grafana-original.svg"><span>Grafana</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original.svg"><span>MySQL</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg"><span>GitHub</span></div>
+        <div class="item"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redhat/redhat-original.svg"><span>RHEL</span></div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- === Education Section === -->
   <section class="education" id="education">
     <h2>Education</h2>
     <div class="container">
-
-      <div class="card">
-        <div class="card-inner">
-          <div class="card-front">
-            Higher Secondary
-          </div>
-          <div class="card-back">
-            <h3>GHSS Meppadi, Wayanad</h3>
-            <ul>
-              <li>Stream: Science</li>
-              <li>Duration: 2017 - 2019</li>
-              <li>Percentage: 80%</li>
-              <li>Major Subjects: Physics, Chemistry, Math</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-inner">
-          <div class="card-front">
-            Graduation
-          </div>
-          <div class="card-back">
-            <h3>WMO Arts and Science collage, Wayanad</h3>
-            <ul>
-              <li>Degree: B.Sc. Electronics</li>
-              <li>Duration: 2019 - 2022</li>
-              <li>CGPA: 8.5/10</li>
-              <li>Activities: Electronis and components, 
-                  PCB desining, C++ , Arduino programing.
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-inner">
-          <div class="card-front">
-            DevOps Engineering
-          </div>
-          <div class="card-back">
-            <h3>Synnefo Solutions
-              Ernakulam
-            </h3>
-            <ul>
-              <li>Course: DevOps Training</li>
-              <li>Duration: march 2024 - Dec 2024</li>
-              <li>Skills: Docker, Kubernetes, Jenkins, AWS, RHEL, Ansible, CI/CD</li>
-              <li>Certification: Completed</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
+      <div class="card"><div class="card-inner"><div class="card-front">Higher Secondary</div><div class="card-back"><h3>GHSS Meppadi, Wayanad</h3><ul><li>Stream: Science</li><li>Duration: 2017 - 2019</li><li>Percentage: 80%</li><li>Major Subjects: Physics, Chemistry, Math</li></ul></div></div></div>
+      <div class="card"><div class="card-inner"><div class="card-front">Graduation</div><div class="card-back"><h3>WMO Arts and Science collage, Wayanad</h3><ul><li>Degree: B.Sc. Electronics</li><li>Duration: 2019 - 2022</li><li>CGPA: 8.5/10</li><li>Activities: Electronis and components, PCB desining, C++ , Arduino programing.</li></ul></div></div></div>
+      <div class="card"><div class="card-inner"><div class="card-front">DevOps Engineering</div><div class="card-back"><h3>Synnefo Solutions, Ernakulam</h3><ul><li>Course: DevOps Training</li><li>Duration: March 2024 - Dec 2024</li><li>Skills: Docker, Kubernetes, Jenkins, AWS, RHEL, Ansible, CI/CD</li><li>Certification: Completed</li></ul></div></div></div>
     </div>
   </section>
 
