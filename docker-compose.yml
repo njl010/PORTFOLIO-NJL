@@ -5,11 +5,11 @@ services:
     build: .
     container_name: portfolio-web
     networks:
-      network-njl:
+      n/w-njl:
         ipv4_address: 172.29.0.2/16
 
 networks:
-  network-njl:
+  n/w-njl:
     driver: bridge
     ipam:
       config:
