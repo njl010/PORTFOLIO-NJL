@@ -31,7 +31,7 @@ jobs:
       - name: Deploy on server
         run: |
           ssh -i ~/.ssh/id_ed25519 ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
-            docker pull ${{ secrets.DOCKER_USERNAME }}/portfolio-njl:latest
+            docker pull ${{ secrets.DOCKER_NAME }}/portfolio-njl:latest
             docker stop portfolio-app || true
             docker rm portfolio-app || true
             docker run -d --name portfolio-app \
@@ -40,4 +40,4 @@ jobs:
               ${{ secrets.DOCKER_NAME }}/portfolio:latest
           EOF
 
-          
+
