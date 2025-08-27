@@ -18,8 +18,8 @@ jobs:
 
       - name: Build and push Docker image with Docker Compose
         run: |
-          docker compose build /PORTFOLIO-NJL/ 
-          docker push ${{ secrets.DOCKER_USERNAME }}/portfolio:latest
+          docker compose build
+          docker push ${{ secrets.DOCKER_NAME }}/portfolio:latest
 
       - name: Set up SSH
         run: |
