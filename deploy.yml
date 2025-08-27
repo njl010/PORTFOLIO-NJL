@@ -1,0 +1,51 @@
+name: CI/CD: Docker Deploy to VPC
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.CHAAVI }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ secrets.HERO }} >> ~/.ssh/known_hosts
+
+      - name: Deploy & Run Docker Container on Remote Server
+        run: |
+          ssh -i ~/.ssh/id_ed25519 ${{ secrets.CAMIO }}@${{ secrets.HERO }} << 'EOF'
+            set -e
+            if ! command -v docker >/dev/null 2>&1; then
+              sudo apt update
+              sudo apt install -y docker.io
+              sudo systemctl enable docker
+              sudo systemctl start docker
+              sudo usermod -aG docker $USER
+            fi
+            mkdir -p ~/on-air
+            cd ~/on-air
+            rm -rf *
+          EOF
+
+      - name: Copy project files to server
+        run: |
+          scp -i ~/.ssh/id_ed25519 -r . ${{ secrets.CAMIO }}@${{ secrets.HERO }}:~/on-air
+
+      - name: Build and run Docker container
+        run: |
+          ssh -i ~/.ssh/id_ed25519 ${{ secrets.CAMIO }}@${{ secrets.HERO }} << 'EOF'
+            cd ~/on-air
+            docker build -t portfolio-njl .
+            docker stop portfolio-njl || true
+            docker rm portfolio-njl || true
+            docker run -d --name portfolio-njl -p 80:80 portfolio-njl
+          EOF
