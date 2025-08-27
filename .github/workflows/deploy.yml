@@ -41,7 +41,7 @@ jobs:
 
       - name: Run Docker Compose
         run: |
-          ssh -i ~/.ssh/id_ed25519 ${{ secrets.USER }}@${{ secrets.HERO }} << 'EOF'
+          ssh -i ~/.ssh/id_ed25519 ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
             cd ~/on-air
             docker compose down || true
             docker compose up -d --build
