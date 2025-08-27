@@ -1,4 +1,4 @@
-name: CI/CD Docker Compose Deploy to VPC
+name: CI/CD using Docker Hub and SSH Deploy
 
 on:
   push:
@@ -13,6 +13,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_WORD }}" | docker login -u "${{ secrets.DOCKER_NAME }}" --password-stdin
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_NAME }}/portfolio:latest .
+          docker push ${{ secrets.DOCKER_NAME }}/portfolio:latest
+
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
@@ -20,29 +28,14 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
 
-      - name: Prepare remote server
+      - name: Deploy on server
         run: |
           ssh -i ~/.ssh/id_ed25519 ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
-            set -e
-            if ! command -v docker >/dev/null 2>&1; then
-              sudo apt update
-              sudo apt install -y docker.io docker-compose
-              sudo systemctl enable docker
-              sudo systemctl start docker
-            fi
-            mkdir -p ~/on-air
-            cd ~/on-air
-            rm -rf *
-          EOF
-
-      - name: Copy project files to server
-        run: |
-          scp -i ~/.ssh/id_ed25519 -r . ${{ secrets.USER }}@${{ secrets.HOST }}:~/on-air
-
-      - name: Run Docker Compose
-        run: |
-          ssh -i ~/.ssh/id_ed25519 ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
-            cd ~/on-air
-            docker compose down || true
-            docker compose up -d --build
+            docker pull ${{ secrets.DOCKER_USERNAME }}/portfolio-njl:latest
+            docker stop portfolio-app || true
+            docker rm portfolio-app || true
+            docker run -d --name portfolio-app \
+              --network nw-njl \
+              --ip 172.29.0.2 \
+              ${{ secrets.DOCKER_NAME }}/portfolio:latest
           EOF
