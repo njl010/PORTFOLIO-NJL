@@ -39,3 +39,5 @@ jobs:
               --ip 172.29.0.2 \
               ${{ secrets.DOCKER_NAME }}/portfolio:latest
           EOF
+
+          
