@@ -1,4 +1,4 @@
-name: CI/CD: Docker Compose Deploy to VPC
+name: CI/CD Docker Compose Deploy to VPC
 
 on:
   push:
