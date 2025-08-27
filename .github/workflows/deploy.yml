@@ -1,4 +1,4 @@
-name: CI/CD: Docker Deploy to VPC
+name: CI/CD: Docker Compose Deploy to VPC
 
 on:
   push:
@@ -18,18 +18,17 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.CHAAVI }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ secrets.HERO }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy & Run Docker Container on Remote Server
+      - name: Prepare remote server
         run: |
-          ssh -i ~/.ssh/id_ed25519 ${{ secrets.CAMIO }}@${{ secrets.HERO }} << 'EOF'
+          ssh -i ~/.ssh/id_ed25519 ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
             set -e
             if ! command -v docker >/dev/null 2>&1; then
               sudo apt update
-              sudo apt install -y docker.io
+              sudo apt install -y docker.io docker-compose
               sudo systemctl enable docker
               sudo systemctl start docker
-              sudo usermod -aG docker $USER
             fi
             mkdir -p ~/on-air
             cd ~/on-air
@@ -38,14 +37,12 @@ jobs:
 
       - name: Copy project files to server
         run: |
-          scp -i ~/.ssh/id_ed25519 -r . ${{ secrets.CAMIO }}@${{ secrets.HERO }}:~/on-air
+          scp -i ~/.ssh/id_ed25519 -r . ${{ secrets.USER }}@${{ secrets.HOST }}:~/on-air
 
-      - name: Build and run Docker container
+      - name: Run Docker Compose
         run: |
-          ssh -i ~/.ssh/id_ed25519 ${{ secrets.CAMIO }}@${{ secrets.HERO }} << 'EOF'
+          ssh -i ~/.ssh/id_ed25519 ${{ secrets.USER }}@${{ secrets.HERO }} << 'EOF'
             cd ~/on-air
-            docker build -t portfolio-njl .
-            docker stop portfolio-njl || true
-            docker rm portfolio-njl || true
-            docker run -d --name portfolio-njl -p 80:80 portfolio-njl
+            docker compose down || true
+            docker compose up -d --build
           EOF
