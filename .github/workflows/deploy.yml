@@ -37,5 +37,5 @@ jobs:
             docker run -d --name portfolio-app \
               --network nw-njl \
               --ip 172.29.0.2 \
-              ${{ secrets.DOCKER_USERNAME }}/portfolio:latest
+              ${{ secrets.DOCKER_NAME }}/portfolio:latest
           EOF
