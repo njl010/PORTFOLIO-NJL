@@ -38,10 +38,10 @@ jobs:
 
             docker pull ${{ secrets.DOCKER_NAME }}/portfolio:latest
 
-            docker stop portfolio-app || true
-            docker rm portfolio-app || true
+            docker stop folio-njl || true
+            docker rm foloio-njls || true
 
-            docker run -d --name portfolio-app \
+            docker run -d --name folio-njl \
               --network nw-njl \
               --ip 172.29.0.2 \
               ${{ secrets.DOCKER_NAME }}/portfolio:latest

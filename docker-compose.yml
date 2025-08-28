@@ -3,7 +3,7 @@ version: "3.8"
 services:
   portfolio-web:
     build: 
-    container_name: portfolio-app
+    container_name: folio-njl
     networks:
       nw-njl:
         ipv4_address: 172.29.0.2
