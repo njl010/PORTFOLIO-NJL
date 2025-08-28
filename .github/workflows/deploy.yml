@@ -36,7 +36,7 @@ jobs:
                 --subnet=172.29.0.0/16 \
                 --driver=bridge nw-njl
             docker image rm -f ${{ secrets.DOCKER_NAME }}/portfolio:latest
-
+            docker image rm -f <none>
             docker pull ${{ secrets.DOCKER_NAME }}/portfolio:latest
 
             docker container stop folio-njl || true
