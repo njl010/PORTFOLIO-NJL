@@ -39,7 +39,7 @@ jobs:
             docker pull ${{ secrets.DOCKER_NAME }}/portfolio:latest
 
             docker stop folio-njl || true
-            docker rm foloio-njls || true
+            docker rm foloio-njl || true
 
             docker run -d --name folio-njl \
               --network nw-njl \
