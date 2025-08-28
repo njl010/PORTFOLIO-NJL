@@ -18,7 +18,7 @@ jobs:
 
       - name: Build and push Docker image with Docker Compose
         run: |
-          docker compose build -t ${{ secrets.DOCKER_NAME }}/portfolio:latest
+          docker build -t ${{ secrets.DOCKER_NAME }}/portfolio:latest .
           docker push ${{ secrets.DOCKER_NAME }}/portfolio:latest
 
       - name: Set up SSH
