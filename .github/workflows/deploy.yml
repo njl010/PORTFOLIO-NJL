@@ -31,9 +31,16 @@ jobs:
       - name: Deploy on server
         run: |
           ssh -i ~/.ssh/id_ed25519 ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
+            docker network inspect nw-njl >/dev/null 2>&1 || \
+              docker network create \
+                --subnet=172.29.0.0/16 \
+                --driver=bridge nw-njl
+
             docker pull ${{ secrets.DOCKER_NAME }}/portfolio:latest
+
             docker stop portfolio-app || true
             docker rm portfolio-app || true
+
             docker run -d --name portfolio-app \
               --network nw-njl \
               --ip 172.29.0.2 \
