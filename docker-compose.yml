@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   portfolio-web:
-    build: .
+    build: 
     container_name: portfolio-web
     networks:
       nw-njl:
