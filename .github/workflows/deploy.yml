@@ -35,7 +35,7 @@ jobs:
               docker network create \
                 --subnet=172.29.0.0/16 \
                 --driver=bridge nw-njl
-            docker image rm -f 
+            docker image rm -f ${{ secrets.DOCKER_NAME }}/portfolio:latest
 
             docker pull ${{ secrets.DOCKER_NAME }}/portfolio:latest
 
@@ -49,4 +49,3 @@ jobs:
           EOF
 
 
-#yaaahoooo!
