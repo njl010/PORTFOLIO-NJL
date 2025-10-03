@@ -58,12 +58,33 @@
     .home-content h3 { font-size: 32px; color: rgb(108, 184, 9); margin-bottom: 10px; }
     .home-content p { margin: 15px 0; font-size: 16px; line-height: 1.6; max-width: 600px; }
 
-    .intro-photo {
-      flex: 1;
-      max-width: 350px;
-      height: auto;
-      object-fit: cover;
-    }
+.intro-photo {
+  flex: 1;
+  max-width: 400px;
+  height: auto;
+  object-fit: cover;
+  margin-right: 100px;
+  /* Floating animation */
+  animation: float 3s ease-in-out infinite;
+  transition: opacity 0.3s ease;
+  cursor: pointer; /* Optional, to indicate it's interactive */
+}
+
+/* Floating keyframes */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Make transparent on hover */
+.intro-photo:hover {
+  opacity: 0.5;
+}
+
 
     .btn-box { margin-top: 20px; display: flex; gap: 20px; }
     .btn-box a {
@@ -232,7 +253,7 @@
         <a href="#"><i class='bx bxl-linkedin'></i></a>
       </div>
     </div>
-    <img src="your-photo.jpg" alt="Najil Umair" class="intro-photo" />
+    <img src="foto.png" alt="Najil Umair" class="intro-photo" />
   </section>
 
   <section class="about" id="about">
@@ -302,7 +323,7 @@
 
   <section class="contact" id="contact">
     <h2>Contact Me</h2>
-    <p>Email: najil@example.com | LinkedIn: <a href="#">linkedin.com/in/najil</a></p>
+    <p>Email: najilumair@gmail.com | LinkedIn: <a href="#">www.linkedin.com/in/najil-umair-aa34802bb</a></p>
   </section>
 
   <footer>
@@ -376,9 +397,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-#yaaahoooo!

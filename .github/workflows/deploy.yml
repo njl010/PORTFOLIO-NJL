@@ -16,7 +16,7 @@ jobs:
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_WORD }}" | docker login -u "${{ secrets.DOCKER_NAME }}" --password-stdin
 
-      - name: Build and push Docker image with Docker Compose
+      - name: Build and push Docker image using docker file
         run: |
           docker build -t ${{ secrets.DOCKER_NAME }}/portfolio:latest .
           docker push ${{ secrets.DOCKER_NAME }}/portfolio:latest
