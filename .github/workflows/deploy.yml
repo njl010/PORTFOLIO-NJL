@@ -18,7 +18,7 @@ jobs:
 
       - name: Build and push Docker image using docker file
         run: |
-          docker build -t ${{ secrets.DOCKER_NAME }}/portfolio:latest ./PORTFOLIO-NJL
+          docker build -t ${{ secrets.DOCKER_NAME }}/portfolio:latest ./PORTFOLIO-NJL/
           docker push ${{ secrets.DOCKER_NAME }}/portfolio:latest
 
       - name: Set up SSH
